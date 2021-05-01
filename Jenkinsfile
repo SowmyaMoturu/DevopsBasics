@@ -7,7 +7,7 @@ pipeline {
       }
     }
 
-    stage('regression') {
+    stage('test') {
       parallel {
         stage('regression') {
           steps {
@@ -21,6 +21,13 @@ pipeline {
           }
         }
 
+      }
+    }
+
+    stage('package') {
+      steps {
+        bat 'mvn package'
+        archiveArtifacts '**/*.war'
       }
     }
 
