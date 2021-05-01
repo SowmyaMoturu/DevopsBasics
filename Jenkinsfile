@@ -17,7 +17,7 @@ pipeline {
 
         stage('smoke') {
           steps {
-            bat 'mvn test -pSmoke'
+            bat 'mvn test -Psmoke'
           }
         }
 
