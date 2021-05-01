@@ -1,33 +1,43 @@
 package com.example;
 
-import org.junit.Before;
-import org.junit.Test;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.Matchers.greaterThan;
-import static org.junit.Assert.assertThat;
-import static org.junit.matchers.JUnitMatchers.containsString;
+import java.util.Objects;
+
+import org.testng.Assert;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Test;
 
 public class TestGreeter {
+	
+	 private Greeter greeter;
+	
+	@BeforeClass(alwaysRun=true)
+	public void setup() {
+		greeter = new Greeter();
+	}
+	
+	 @Test(groups = {"smoke", "regression"})
+	  public void greetShouldIncludeTheOneBeingGreeted() {
+		 System.out.println(Objects.isNull(greeter));
+	    String someone = "World";
+	    Assert.assertTrue(greeter.greet(someone).contains(someone));
+	  }
+	 
+	 @Test(groups = {"regression"})
+	  public void greetShouldIncludeGreetingPhrase() {
+	    String someone = "World";
+	    Assert.assertTrue(greeter.greet(someone).length()>someone.length());
+	  }
 
-  private Greeter greeter;
+	 @Test(groups = {"regression"})
+	  public void greetShouldIncludeHello() {
+	    String someone = "World";
+	    Assert.assertTrue(greeter.greet(someone).contains("Hello"));
+	  }
 
-  @Before
-  public void setup() {
-    greeter = new Greeter();
-  }
-
-  @Test
-  public void greetShouldIncludeTheOneBeingGreeted() {
-    String someone = "World";
-
-    assertThat(greeter.greet(someone), containsString(someone));
-  }
-
-  @Test
-  public void greetShouldIncludeGreetingPhrase() {
-    String someone = "World";
-
-    assertThat(greeter.greet(someone).length(), is(greaterThan(someone.length())));
-  }
+	 @Test(groups = {"regression", "smoke"})
+	  public void greetShouldIncludeHowAreYou() {
+	    String someone = "World";
+	    Assert.assertTrue(greeter.greet(someone).contains("How are you"));
+	  }
 }
