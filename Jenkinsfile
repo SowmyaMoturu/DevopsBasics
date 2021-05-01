@@ -1,7 +1,7 @@
 pipeline {
   agent any
   stages {
-     stage('checkout') {
+    stage('checkout') {
       steps {
         git(url: 'https://git.epam.com/sowmya_moturu/devopsbasics.git', branch: 'master')
       }
@@ -37,9 +37,9 @@ pipeline {
       }
     }
 
-     stage('deploy') {
+    stage('deploy') {
       steps {
-      deploy adapters: [tomcat9(credentialsId: 'd698c92f-b0e9-486b-ba09-ca8366f8c5ac', path: '', url: 'http://100.64.65.11:9090/')], contextPath: '/', war: '**/*.war'
+        deploy(adapters: [tomcat9(credentialsId: 'd698c92f-b0e9-486b-ba09-ca8366f8c5ac', path: '', url: 'http://100.64.65.11:9090/')], contextPath: '/', war: '**/*.war')
       }
     }
 
