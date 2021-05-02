@@ -55,7 +55,7 @@ pipeline {
             
                 success {
      
-                    archiveArtifacts 'target/*.jar'
+                    archiveArtifacts '**/*.war'
                 }
             }
     }
