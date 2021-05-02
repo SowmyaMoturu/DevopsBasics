@@ -39,7 +39,7 @@ pipeline {
 
     stage('deploy') {
       steps {
-        deploy(adapters: [tomcat9(credentialsId: 'd698c92f-b0e9-486b-ba09-ca8366f8c5ac', path: '', url: 'http://100.64.65.11:9090/')], contextPath: '/', war: '**/*.war')
+        deploy(adapters: [tomcat9(credentialsId: 'd698c92f-b0e9-486b-ba09-ca8366f8c5ac', path: '', url: 'http://localhost:9090/')], contextPath: '/', war: '**/*.war')
       }
     }
 
