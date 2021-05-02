@@ -19,12 +19,27 @@ pipeline {
           steps {
             bat 'mvn test -Pregression'
           }
+              post {
+           
+             success {
+          
+                junit '**/target/surefire-reports/TEST-*.xml'
+                }
+                }
+       
         }
 
         stage('smoke') {
           steps {
             bat 'mvn test -Psmoke'
           }
+              post {
+           
+             success {
+          
+                junit '**/target/surefire-reports/TEST-*.xml'
+                }
+                }
         }
 
       }
@@ -35,6 +50,14 @@ pipeline {
         bat 'mvn package'
         archiveArtifacts '**/*.war'
       }
+      
+       post {
+            
+                success {
+     
+                    archiveArtifacts 'target/*.jar'
+                }
+            }
     }
 
     stage('deploy') {

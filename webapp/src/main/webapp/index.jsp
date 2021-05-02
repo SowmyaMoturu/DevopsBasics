@@ -12,5 +12,7 @@
 <h1>CI CD Mentoring Program</h1>
 <p class="first">
 Sample app for Home task 1
+
+<h1>Creating pipeline</h1>
 </body>
 
