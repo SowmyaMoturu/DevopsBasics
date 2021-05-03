@@ -2,7 +2,7 @@ pipeline {
 
   agent any
   
-   tools {
+  tools {
         maven "LocalMaven"
   }
   
@@ -20,13 +20,13 @@ pipeline {
       
         stage('regression') {
           steps {
-    		bat     'mvn test -Pregression'
+    	    	bat 'mvn test -Pregression'
           }
         }
 
         stage('smoke') {
           steps {
-    			bat 'mvn test -Psmoke'
+    		  	bat 'mvn test -Psmoke'
           }
         }
       }
@@ -54,6 +54,6 @@ pipeline {
       steps {
      		junit '**/*.xml'
       }
-
+    }
   }
 }
