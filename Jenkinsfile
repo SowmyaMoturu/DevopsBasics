@@ -3,7 +3,7 @@ pipeline {
   stages {
     stage('checkout') {
       steps {
-       git branch: 'master', credentialsId: 'Gitlab', url: 'https://git.epam.com/sowmya_moturu/devopsbasics.git'
+      		git credentialsId: 'Gitlab', url: 'https://git.epam.com/sowmya_moturu/devopsbasics'
       }
     }
 
@@ -12,7 +12,7 @@ pipeline {
         stage('regression') {
           steps {
           withMaven( maven: 'LocalMaven') {
-    			     mvn test -Pregression
+    			bat     'mvn test -Pregression'
 			}
         
           }
@@ -26,7 +26,7 @@ pipeline {
         stage('smoke') {
           steps {
             withMaven( maven: 'LocalMaven') {
-    			 mvn test -Psmoke
+    			bat 'mvn test -Psmoke'
 			}
           }
           post {
@@ -42,7 +42,7 @@ pipeline {
     stage('package') {
       steps {
        withMaven( maven: 'LocalMaven') {
-    			 mvn package
+    			bat 'mvn package'
 			}
       }
           post {
