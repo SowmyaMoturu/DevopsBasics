@@ -7,17 +7,14 @@ pipeline {
       }
     }
 
-    stage('build') {
-      steps {
-        bat 'mvn compile'
-      }
-    }
-
-    stage('test') {
+     stage('test') {
       parallel {
         stage('regression') {
           steps {
-            bat 'mvn test -Pregression'
+          withMaven( maven: 'LocalMaven') {
+    			     mvn test -Pregression
+			}
+        
           }
           post {
           	success	{
@@ -28,7 +25,9 @@ pipeline {
 
         stage('smoke') {
           steps {
-            bat 'mvn test -Psmoke'
+            withMaven( maven: 'LocalMaven') {
+    			 mvn test -Psmoke
+			}
           }
           post {
           	success	{
@@ -42,7 +41,9 @@ pipeline {
 
     stage('package') {
       steps {
-        bat 'mvn package'
+       withMaven( maven: 'LocalMaven') {
+    			 mvn package
+			}
       }
           post {
           	success	{
