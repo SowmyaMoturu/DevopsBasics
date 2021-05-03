@@ -16,13 +16,16 @@ h1 {
   margin-bottom: 25px;
 }
 
-h2{
-  font-size: 25px;
-  margin-bottom: 25px;
-   margin-top: 25px;
+h2 {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+p {
+  margin-bottom: 20px;
 }
 
 .first {
-  color: green;
+  color: blue;
   margin-bottom: 25px;
 }
