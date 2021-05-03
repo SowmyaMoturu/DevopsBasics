@@ -1,6 +1,12 @@
 pipeline {
 
-  agent any
+   agent {
+            node {
+              label 'master'
+            }
+
+          }
+
   
   tools {
         maven "Maven"
@@ -17,6 +23,14 @@ pipeline {
     stage('test') {
      
       parallel {
+
+         agent {
+            node {
+              label 'JenkinsNode1'
+            }
+
+          }
+
       
         stage('regression') {
           steps {
