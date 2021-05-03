@@ -52,7 +52,7 @@ pipeline {
     
     stage('results') {
       steps {
-     		junit  '**/target/surefire-reports/TEST-*.xml'
+     		junit  '**/target/surefire-reports/junitreports/TEST-*.xml'
       }
     }
   }
