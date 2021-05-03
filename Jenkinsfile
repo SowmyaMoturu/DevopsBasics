@@ -8,7 +8,7 @@ pipeline {
   
   stages {
   
-    stage('checkout') {
+    stage('build') {
       steps {
       		git credentialsId: 'Gitlab', url: 'https://git.epam.com/sowmya_moturu/devopsbasics.git'
       }
