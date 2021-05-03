@@ -39,7 +39,7 @@ pipeline {
       }
           post {
           	success	{
-          		archiveArtifacts '** /*.war'
+          		archiveArtifacts '**/*.war'
           	}
           }
     }
