@@ -59,12 +59,6 @@ pipeline {
       }
     }
 
-    stage('emailResults') {
-      steps {
-        emailext(subject: 'Jenkins Job', body: 'Jenkins job ran successfully', attachLog: true, to: 'sowmya_moturu@epam.com')
-      }
-    }
-
   }
   tools {
     maven 'Maven'
