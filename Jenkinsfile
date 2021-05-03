@@ -3,7 +3,7 @@ pipeline {
   stages {
     stage('checkout') {
       steps {
-        git(url: 'https://git.epam.com/sowmya_moturu/devopsbasics.git', branch: 'master')
+       git branch: 'master', credentialsId: 'Gitlab', url: 'https://git.epam.com/sowmya_moturu/devopsbasics.git'
       }
     }
 
@@ -19,27 +19,22 @@ pipeline {
           steps {
             bat 'mvn test -Pregression'
           }
-              post {
-           
-             success {
-          
-                junit '**/target/surefire-reports/TEST-*.xml'
-                }
-                }
-       
+          post {
+          	success	{
+          		junit '**/target/surefire-reports/TEST-*.xml'
+          	}
+          }
         }
 
         stage('smoke') {
           steps {
             bat 'mvn test -Psmoke'
           }
-              post {
-           
-             success {
-          
-                junit '**/target/surefire-reports/TEST-*.xml'
-                }
-                }
+          post {
+          	success	{
+          		junit '**/target/surefire-reports/TEST-*.xml'
+          	}
+          }
         }
 
       }
@@ -48,16 +43,12 @@ pipeline {
     stage('package') {
       steps {
         bat 'mvn package'
-        archiveArtifacts '**/*.war'
       }
-      
-       post {
-            
-                success {
-     
-                    archiveArtifacts '**/*.war'
-                }
-            }
+          post {
+          	success	{
+          		archiveArtifacts '**/*.war'
+          	}
+          }
     }
 
     stage('deploy') {
