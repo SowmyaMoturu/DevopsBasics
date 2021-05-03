@@ -3,8 +3,13 @@ pipeline {
     node {
       label 'master'
     }
-
   }
+  
+  tools {
+    maven 'Maven'
+  }
+  
+  
   stages {
     stage('build') {
       steps {
@@ -19,7 +24,6 @@ pipeline {
             node {
               label 'JenkinsNode1'
             }
-
           }
           steps {
             sh 'mvn test -Pregression'
@@ -31,27 +35,28 @@ pipeline {
             sh 'mvn test -Psmoke'
           }
         }
-
       }
     }
 
     stage('package') {
-      post {
+     
+      steps {
+        sh 'mvn package'
+      }
+      
+       post {
         success {
           archiveArtifacts '**/*.war'
         }
 
-      }
-      steps {
-        sh 'mvn package'
       }
     }
 
     stage('deploy') {
       steps {
         deploy(adapters: [tomcat9(credentialsId: 'tomcatcredentials', path: '', url: 'http://10.245.128.167:8090/')], contextPath: '/', war: '**/*.war')
+        }
       }
-    }
 
     stage('results') {
       steps {
@@ -60,7 +65,5 @@ pipeline {
     }
 
   }
-  tools {
-    maven 'Maven'
-  }
+  
 }
