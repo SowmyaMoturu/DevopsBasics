@@ -1,62 +1,66 @@
 pipeline {
+  agent {
+    node {
+      label 'master'
+    }
 
-agent any
-
-
-  
-  tools {
-        maven "Maven"
   }
-  
   stages {
-  
     stage('build') {
       steps {
-      	git credentialsId: 'GitlabCredentials', url: 'https://git.epam.com/sowmya_moturu/devopsbasics.git'
+        git(credentialsId: 'GitlabCredentials', url: 'https://git.epam.com/sowmya_moturu/devopsbasics.git')
       }
     }
 
     stage('test') {
-     
       parallel {
-      
         stage('regression') {
-          steps {
-    	    	sh 'mvn test -Pregression'
+          agent {
+            node {
+              label 'JenkinsNode1'
+            }
+
           }
-          
+          steps {
+            sh 'mvn test -Pregression'
+          }
         }
 
         stage('smoke') {
           steps {
-    		  	sh 'mvn test -Psmoke'
+            sh 'mvn test -Psmoke'
           }
         }
+
       }
     }
-  
 
     stage('package') {
-      steps {
-    		sh 'mvn package'
+      post {
+        success {
+          archiveArtifacts '**/*.war'
+        }
+
       }
-          post {
-          	success	{
-          		archiveArtifacts '**/*.war'
-          	}
-          }
+      steps {
+        sh 'mvn package'
+      }
     }
 
     stage('deploy') {
       steps {
-       deploy adapters: [tomcat9(credentialsId: 'tomcatcredentials', path: '', url: 'http://10.245.128.167:8090/')], contextPath: '/', war: '**/*.war'
+        deploy(adapters: [tomcat9(credentialsId: 'tomcatcredentials', path: '', url: 'http://10.245.128.167:8090/')], contextPath: '/', war: '**/*.war')
       }
     }
-    
+
     stage('results') {
       steps {
-     		junit  '**/*.xml'
+        junit '**/*.xml'
       }
     }
+
+  }
+  tools {
+    maven 'Maven'
   }
 }
