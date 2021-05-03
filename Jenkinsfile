@@ -2,42 +2,41 @@ pipeline {
 
   agent any
   
+   tools {
+        maven "LocalMaven"
+  }
+  
   stages {
   
     stage('checkout') {
       steps {
-      		git credentialsId: 'Gitlab', url: 'https://git.epam.com/sowmya_moturu/devopsbasics.git'
+      		git credentialsId: 'Gitlab', url: 'https: //git.epam.com/sowmya_moturu/devopsbasics.git'
       }
     }
 
-     stage('test') {
+    stage('test') {
      
       parallel {
       
         stage('regression') {
           steps {
-          withMaven( maven: 'LocalMaven') {
-    			bat     'mvn test -Pregression'
-            }
+    		bat     'mvn test -Pregression'
           }
         }
 
         stage('smoke') {
           steps {
-            withMaven( maven: 'LocalMaven') {
     			bat 'mvn test -Psmoke'
-            }
           }
         }
       }
-     }
+    }
+  
 
     stage('package') {
       steps {
-       withMaven( maven: 'LocalMaven') {
-    			bat 'mvn package'
-            }
-          }
+    		bat 'mvn package'
+      }
           post {
           	success	{
           		archiveArtifacts '** /*.war'
@@ -48,8 +47,8 @@ pipeline {
     stage('deploy') {
       steps {
        deploy adapters: [tomcat9(credentialsId: 'tomcatcredentials', path: '', url: 'http://localhost:9090/')], contextPath: '/', war: '**/*.war'
-            }
-          }
+      }
+    }
     
     stage('results') {
       steps {
