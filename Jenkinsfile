@@ -10,7 +10,7 @@ pipeline {
   
     stage('build') {
       steps {
-      		git credentialsId: 'Gitlab', url: 'https://git.epam.com/sowmya_moturu/devopsbasics.git'
+      	git credentialsId: 'GitlabCredentials', url: 'https://git.epam.com/sowmya_moturu/devopsbasics.git'
       }
     }
 
