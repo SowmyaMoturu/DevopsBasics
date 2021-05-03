@@ -1,11 +1,7 @@
 pipeline {
 
-   agent {
-            node {
-              label 'master'
-            }
+agent any
 
-          }
 
   
   tools {
@@ -23,19 +19,12 @@ pipeline {
     stage('test') {
      
       parallel {
-
-         agent {
-            node {
-              label 'JenkinsNode1'
-            }
-
-          }
-
       
         stage('regression') {
           steps {
     	    	sh 'mvn test -Pregression'
           }
+          
         }
 
         stage('smoke') {
