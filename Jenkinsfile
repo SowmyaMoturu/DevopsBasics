@@ -3,7 +3,7 @@ pipeline {
   agent any
   
   tools {
-        maven "LocalMaven"
+        maven "Maven"
   }
   
   stages {
@@ -20,13 +20,13 @@ pipeline {
       
         stage('regression') {
           steps {
-    	    	bat 'mvn test -Pregression'
+    	    	sh 'mvn test -Pregression'
           }
         }
 
         stage('smoke') {
           steps {
-    		  	bat 'mvn test -Psmoke'
+    		  	sh 'mvn test -Psmoke'
           }
         }
       }
@@ -35,7 +35,7 @@ pipeline {
 
     stage('package') {
       steps {
-    		bat 'mvn package'
+    		sh 'mvn package'
       }
           post {
           	success	{
@@ -46,7 +46,7 @@ pipeline {
 
     stage('deploy') {
       steps {
-       deploy adapters: [tomcat9(credentialsId: 'tomcatcredentials', path: '', url: 'http://localhost:9090/')], contextPath: '/', war: '**/*.war'
+       deploy adapters: [tomcat9(credentialsId: 'tomcatcredentials', path: '', url: 'http://10.245.128.167:8090/')], contextPath: '/', war: '**/*.war'
       }
     }
     
