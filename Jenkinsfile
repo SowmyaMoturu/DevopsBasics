@@ -1,4 +1,5 @@
 pipeline {
+
   agent {
     node {
       label 'master'
@@ -12,7 +13,7 @@ pipeline {
       }
     }
     
-     stage('compile')
+     stage('compile') {
       steps {
        sh 'mvn compile'
       }
@@ -20,6 +21,7 @@ pipeline {
     
 
     stage('test') {
+    
       parallel {
         stage('regression') {
           agent {
