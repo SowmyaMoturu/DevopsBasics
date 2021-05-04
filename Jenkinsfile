@@ -1,5 +1,4 @@
 pipeline {
-
   agent {
     node {
       label 'master'
@@ -9,19 +8,17 @@ pipeline {
   stages {
     stage('build') {
       steps {
-        git(credentialsId: 'GithubCredentials', url: 'https://git.epam.com/sowmya_moturu/devopsbasics.git')
+        git(credentialsId: 'GithubCredentials', url: 'https://github.com/SowmyaMoturu/DevopsBasics.git')
       }
     }
-    
-     stage('compile') {
+
+    stage('compile') {
       steps {
-       sh 'mvn compile'
+        sh 'mvn compile'
       }
     }
-    
 
     stage('test') {
-    
       parallel {
         stage('regression') {
           agent {
