@@ -70,7 +70,7 @@ pipeline {
 
     stage('emailNotification') {
       steps {
-        emailext(subject: 'JenkinsJob', body: 'Jenkins Job ran successfully!...', attachLog: true, from: 'sowmyamoturu@gmail.com', saveOutput: true, to: 'sowmya_moturu@epam.com')
+        emailext(subject: 'JenkinsJob', body: 'Jenkins Job ran successfully!...', attachLog: true, from: 'sowmyamoturu@gmail.com', saveOutput: true, to: 'sowmyamoturu@gmail.com')
       }
     }
 
