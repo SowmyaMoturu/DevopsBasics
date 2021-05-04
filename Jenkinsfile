@@ -3,13 +3,8 @@ pipeline {
     node {
       label 'master'
     }
+
   }
-  
-  tools {
-    maven 'Maven'
-  }
-  
-  
   stages {
     stage('build') {
       steps {
@@ -24,6 +19,7 @@ pipeline {
             node {
               label 'JenkinsNode1'
             }
+
           }
           steps {
             sh 'mvn test -Pregression'
@@ -35,28 +31,27 @@ pipeline {
             sh 'mvn test -Psmoke'
           }
         }
+
       }
     }
 
     stage('package') {
-     
-      steps {
-        sh 'mvn package'
-      }
-      
-       post {
+      post {
         success {
           archiveArtifacts '**/*.war'
         }
 
       }
+      steps {
+        sh 'mvn package'
+      }
     }
 
     stage('deploy') {
       steps {
-       deploy adapters: [tomcat9(credentialsId: 'tomcatcredentials', path: '', url: 'http://10.245.128.134:8090/')], contextPath: '/', war: '**/*.war'
-        }
+        deploy(adapters: [tomcat9(credentialsId: 'tomcatcredentials', path: '', url: 'http://10.245.128.134:8090/')], contextPath: '/', war: '**/*.war')
       }
+    }
 
     stage('results') {
       steps {
@@ -64,6 +59,14 @@ pipeline {
       }
     }
 
+    stage('emailNotification') {
+      steps {
+        emailext(subject: 'JenkinsJob', body: 'Jenkins Job ran successfully!...', attachLog: true, from: 'sowmyamoturu@gmail.com', saveOutput: true, to: 'sowmya_moturu@epam.com')
+      }
+    }
+
   }
-  
+  tools {
+    maven 'Maven'
+  }
 }
