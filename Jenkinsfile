@@ -11,6 +11,13 @@ pipeline {
         git(credentialsId: 'GitlabCredentials', url: 'https://git.epam.com/sowmya_moturu/devopsbasics.git')
       }
     }
+    
+     stage('compile')
+      steps {
+       sh 'mvn compile'
+      }
+    }
+    
 
     stage('test') {
       parallel {
