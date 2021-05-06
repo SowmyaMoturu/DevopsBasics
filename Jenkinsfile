@@ -13,7 +13,7 @@ pipeline {
   stages {
     stage('build') {
       steps {
-        git(credentialsId: 'GitlabCredentials', url: 'https://git.epam.com/sowmya_moturu/devopsbasics.git')
+        git(credentialsId: 'GithubCredentials', url: 'https://github.com/SowmyaMoturu/DevopsBasics.git')
       }
     }
 
