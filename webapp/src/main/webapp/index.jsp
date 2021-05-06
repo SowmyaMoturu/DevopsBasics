@@ -13,6 +13,8 @@
 <p class="first">
 My Sample app for Home task 1
 
-<h2>Creating Jenkins pipeline</h1>
+<h2>Creating Jenkins pipeline</h2>
+<h2>Parallel jobs for smoke and regression tests</h2>
+<h2>Send results in email</h2>
 </body>
 
