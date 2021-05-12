@@ -20,7 +20,7 @@ public class TestGreeter {
 	  public void greetShouldIncludeTheOneBeingGreeted() {
 		 System.out.println(Objects.isNull(greeter));
 	    String someone = "World";
-	    Assert.assertTrue(greeter.greet(someone).contains(someone));
+	    Assert.assertTrue(greeter.greet(someone).contains(someone + "junkText"));
 	  }
 	 
 	 @Test(groups = {"regression"})

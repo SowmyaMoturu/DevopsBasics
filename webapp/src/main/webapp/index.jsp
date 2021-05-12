@@ -16,5 +16,6 @@ My Sample app for Home task 1
 <h2>Creating Jenkins pipeline</h2>
 <h2>Parallel jobs for Smoke and Regression Tests</h2>
 <h2>Send results in email</h2>
+<h2>Added another line</h2>
 </body>
 
