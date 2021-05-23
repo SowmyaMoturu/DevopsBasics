@@ -7,7 +7,9 @@ pipeline {
   }
   stages {
     stage('build') {
-      checkout([$class: 'GitSCM', branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[credentialsId: 'GithubCredentials', url: 'https://github.com/SowmyaMoturu/DevopsBasics.git']]])
+      steps {
+        git(credentialsId: 'GithubCredentials', url: 'https://github.com/SowmyaMoturu/DevopsBasics.git')
+      }
     }
 
     stage('compile') {
@@ -97,7 +99,7 @@ pipeline {
 			cd /opt/docker
 			docker build -t mytomcat .
 			docker run -d -p 8090:8080 mytomcat''', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '', remoteDirectorySDF: false, removePrefix: '/webapp/target', sourceFiles: '**/*.war')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
-    	}s
+    	}
     
     }
 
