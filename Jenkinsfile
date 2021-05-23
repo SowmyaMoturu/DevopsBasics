@@ -53,6 +53,28 @@ pipeline {
       }
     }
 
+ steps {
+        withSonarQubeEnv (credentialsId: 'sonartoken') {
+            sh '''\
+                        -Dsonar.host.url=http://10.245.128.167:9000/ \
+                        -Dsonar.language=java \
+                        -Dsonar.projectName=My Sample Sonar Project \
+                        -Dsonar.projectVersion=1.0 \
+                        -Dsonar.sourceEncoding=UTF-8 \
+                        -Dsonar.projectKey=my-java-maven-sonar \
+                        -Dsonar.sources=server/src \
+                        -Dsonar.java.binaries=server/target/classes \
+                        -Dsonar.projectBaseDir=/usr/jenkins/workspace/Hometask4 \
+                        '''
+            
+        }
+         def qualitygate = waitForQualityGate()
+      if (qualitygate.status != "OK") {
+         error "Pipeline aborted due to quality gate coverage failure: ${qualitygate.status}"
+      }
+      }
+    }
+
     stage('deploy') {
       steps {
         deploy(adapters: [tomcat9(credentialsId: 'tomcatcredentials', path: '', url: 'http://10.245.128.134:8090/')], contextPath: '/', war: '**/*.war')
