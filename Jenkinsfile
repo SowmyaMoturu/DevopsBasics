@@ -90,6 +90,18 @@ pipeline {
         deploy(adapters: [tomcat9(credentialsId: 'tomcatcredentials', path: '', url: 'http://10.245.128.134:8090/')], contextPath: '/', war: '**/*.war')
       }
     }
+    
+    stage('deploy to tomcat on docker) {
+    	steps {
+    		sshPublisher(publishers: [sshPublisherDesc(configName: 'DockerHost', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: '''docker stop -f $(docker ps -qa)
+			docker rm -f $(docker ps -qa)
+			docker rmi mytomcat
+			cd /opt/docker
+			docker build -t mytomcat .
+			docker run -d -p 8090:8080 mytomcat''', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '', remoteDirectorySDF: false, removePrefix: '/webapp/target', sourceFiles: '**/*.war')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
+    	}
+    
+    }
 
     stage('results') {
       steps {
