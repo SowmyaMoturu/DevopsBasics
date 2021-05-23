@@ -56,6 +56,7 @@ pipeline {
  
 environment {
             scannerHome = tool 'SonarScanner'
+            PROJECT_NAME = "My Sample Sonar Project"
         }	
  steps {
  
@@ -63,7 +64,7 @@ environment {
         withSonarQubeEnv (credentialsId: 'sonartoken', installationName: 'SonarQube') {
             sh ''' \
                   	  ${scannerHome}/bin/sonar-scanner \
-                        -Dsonar.projectName=MySampleSonarProject \
+                        -Dsonar.projectName=$PROJECT_NAME \
                         -Dsonar.projectVersion=1.0 \
                         -Dsonar.sourceEncoding=UTF-8 \
                         -Dsonar.projectKey=my-java-maven-sonar \
