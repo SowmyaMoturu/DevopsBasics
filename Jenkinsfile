@@ -60,8 +60,8 @@ pipeline {
 -Dsonar.projectName=My Sample Sonar Project 
 -Dsonar.projectKey=my-java-maven-sonar
 -Dsonar.sources=server/src 
--Dsonar.java.binaries=server/target/classes 
--Dsonar.projectBaseDir=/usr/jenkins/workspace/Hometask4'''
+-Dsonar.java.binaries=server/target/classes
+-Dsonar.projectVersion=1.0'''
         }
 
         script {
