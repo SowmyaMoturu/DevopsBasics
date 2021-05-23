@@ -91,7 +91,7 @@ pipeline {
       }
     }
     
-    stage('deploy to tomcat on docker) {
+    stage('deploy to tomcat on docker') {
     	steps {
     		sshPublisher(publishers: [sshPublisherDesc(configName: 'DockerHost', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: '''docker stop -f $(docker ps -qa)
 			docker rm -f $(docker ps -qa)
