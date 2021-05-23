@@ -52,40 +52,39 @@ pipeline {
         sh 'mvn package'
       }
     }
- stage('SonarQube Analysis') {
+    stage('SonarQube Analysis') {
  
-environment {
+        environment {
             scannerHome = tool 'SonarScanner'
             PROJECT_NAME = "My Sample Sonar Project"
         }	
- steps {
+        steps {
  
-    
-        withSonarQubeEnv (credentialsId: 'sonartoken', installationName: 'SonarQube') {
-            sh ''' \
-                  	  ${scannerHome}/bin/sonar-scanner \
-                        -Dsonar.projectName=MyProject \
-                        -Dsonar.projectVersion=1.0 \
-                        -Dsonar.sourceEncoding=UTF-8 \
-                        -Dsonar.projectKey=MyProject \
-                        -Dsonar.sources=server/src \
-                        -Dsonar.java.binaries=server/target/classes \
-                        '''
-            
-        }
-        
-        script{
-         def qualitygate = waitForQualityGate()
-    		  if (qualitygate.status != "OK") {
-        		 error "Pipeline aborted due to quality gate coverage failure: ${qualitygate.status}"
-      
-      }
+            withSonarQubeEnv (credentialsId: 'sonartoken', installationName: 'SonarQube') {
+                sh ''' \
+                        ${scannerHome}/bin/sonar-scanner \
+                            -Dsonar.projectName=MyProject \
+                            -Dsonar.projectVersion=1.0 \
+                            -Dsonar.sourceEncoding=UTF-8 \
+                            -Dsonar.projectKey=my-java-maven-sonar \
+                            -Dsonar.sources=server/src \
+                            -Dsonar.java.binaries=server/target/classes \
+                            '''
+            }
       
         }
         
-      }
     }
+    
 
+    stage("Quality Gate") {
+        steps {
+            timeout(time: 1, unit: 'MINUTES') {
+                 waitForQualityGate abortPipeline: true
+            }
+        }
+    }
+    
     stage('deploy') {
       steps {
         deploy(adapters: [tomcat9(credentialsId: 'tomcatcredentials', path: '', url: 'http://10.245.128.134:8090/')], contextPath: '/', war: '**/*.war')
