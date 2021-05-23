@@ -21,19 +21,4 @@ public class Greeter {
 		return String.format("Hello How are you, %s!", someone);
 	}
 	
-	public  void myMethod() {
-			
-		int val;
-		if(true) {
-			
-		}
-		else {
-			val = 20;
-		}
-		boolean myflag;
-		if(myflag=true) {
-			val = 5;
-		}
-		
-	}
 }
