@@ -6,11 +6,7 @@ pipeline {
 
   }
   stages {
-    stage('build') {
-      steps {
-     git (credentialsId: 'GithubCredentials', url: 'https://github.com/SowmyaMoturu/DevopsBasics.git')
-      }
-    }
+
 
     stage('compile') {
       steps {
