@@ -63,7 +63,7 @@ environment {
         withSonarQubeEnv (credentialsId: 'sonartoken', installationName: 'SonarQube') {
             sh ''' \
                   	  ${scannerHome}/bin/sonar-scanner \
-                        -Dsonar.projectName="My Sample Sonar Project" \
+                        -Dsonar.projectName=MySampleSonarProject \
                         -Dsonar.projectVersion=1.0 \
                         -Dsonar.sourceEncoding=UTF-8 \
                         -Dsonar.projectKey=my-java-maven-sonar \
