@@ -54,10 +54,12 @@ pipeline {
     }
  stage('SonarQube Analysis') {
  
-   script {
+
+ steps {
+ 
+    script {
             scannerHome = tool 'SonarScanner';
         }
- steps {
         withSonarQubeEnv (credentialsId: 'sonartoken', installationName: 'SonarQube') {
             sh ''' \
                   	  ${scannerHome}/bin/sonar-scanner \
