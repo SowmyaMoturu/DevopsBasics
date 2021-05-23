@@ -55,8 +55,8 @@ pipeline {
  stage('SonarQube Analysis') {
  steps {
         withSonarQubeEnv (credentialsId: 'sonartoken', installationName: 'SonarQube') {
-            sh '''\
-                        -Dsonar.host.url=http://10.245.128.167:9000/ \
+            sh ''' \
+                        
                         -Dsonar.language=java \
                         -Dsonar.projectName=My Sample Sonar Project \
                         -Dsonar.projectVersion=1.0 \
