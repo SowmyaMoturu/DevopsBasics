@@ -56,11 +56,11 @@ pipeline {
  
 environment {
             scannerHome = tool 'SonarScanner'
-        }
+        }	
  steps {
  
     
-        withSonarQubeEnv (credentialsId: 'sonartoken', installationName: 'SonarQube	') {
+        withSonarQubeEnv (credentialsId: 'sonartoken', installationName: 'SonarQube') {
             sh ''' \
                   	  ${scannerHome}/bin/sonar-scanner \
                         -Dsonar.projectName=My Sample Sonar Project \
