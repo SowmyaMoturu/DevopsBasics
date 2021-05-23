@@ -52,7 +52,7 @@ pipeline {
         sh 'mvn package'
       }
     }
-
+ stage('SonarQube Analysis') {
  steps {
         withSonarQubeEnv (credentialsId: 'sonartoken') {
             sh '''\
@@ -72,6 +72,7 @@ pipeline {
       if (qualitygate.status != "OK") {
          error "Pipeline aborted due to quality gate coverage failure: ${qualitygate.status}"
       }
+      
       }
     }
 
