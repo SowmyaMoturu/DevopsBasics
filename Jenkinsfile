@@ -54,14 +54,11 @@ pipeline {
     }
  stage('SonarQube Analysis') {
  
-   script {
-    SCANNER_HOME = tool 'SonarScanner'
-  }
+  
  steps {
         withSonarQubeEnv (credentialsId: 'sonartoken', installationName: 'SonarQube') {
             sh ''' \
-                        $SCANNER_HOME/bin/sonar-scanner \
-                        -Dsonar.language=java \
+                    
                         -Dsonar.projectName=My Sample Sonar Project \
                         -Dsonar.projectVersion=1.0 \
                         -Dsonar.sourceEncoding=UTF-8 \
